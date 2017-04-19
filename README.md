@@ -9,8 +9,8 @@ clone --recursive https://github.com/alandipert/bellona.git`
 
 * `gcc`
 * GNU `make`
-* `[cmc](https://github.com/eudoxia0/cmacro)`
-* `[entr](http://entrproject.org/)` (optional)
+* [`cmc`](https://github.com/eudoxia0/cmacro)
+* [`entr`](http://entrproject.org/) (optional)
 
 ## Developing
 
