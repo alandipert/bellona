@@ -1,7 +1,48 @@
-/* -*- mode: c; -*- */
 #include <stdio.h>
 
+macro if_let {
+  case {
+    match {
+      ($(var ident) = $(pred rest)) $(then block)
+    }
+    template {
+      typeof($(pred)) $(@gensym if_let) = $(pred);
+      if($(@getsym if_let 0)) {
+        typeof($(@getsym if_let 0)) $(var) = $(@getsym if_let 0);
+        $(@splice then)
+      }
+    }
+  }
+  case {
+    match {
+      ($(var ident) = $(pred rest)) $(then block) else $(else block)
+    }
+    template {
+      typeof($(pred)) $(@gensym if_let) = $(pred);
+      if($(@getsym if_let 0)) {
+        typeof($(@getsym if_let 0)) $(var) = $(@getsym if_let 0);
+        $(@splice then)
+      } else $(else)
+    }
+  }
+}
+
+int add2(int x, int y) {
+  return x+y;
+}
+
 int main(int argc, char **argv) {
-  printf("hello, this is a test");
+  /* one-armed if */
+  if_let(x = 123) {
+    printf("x = %d\n", x);
+  }
+  /* two-armed if */
+  if_let(y = add2(3,5)) {
+    /* x is available here */
+    printf("y = %d\n", y);
+  } else {
+    /* x isn't available in here */
+    printf("in the else\n");
+  }
   return 0;
 }
